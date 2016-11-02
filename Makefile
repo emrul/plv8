@@ -142,7 +142,7 @@ distclean:
 	rm -rf build
 
 static:
-	$(MAKE) -f Makefile.v8
+	$(MAKE) -f Makefile.v8 -j12
 
 # Check if META.json.version and PLV8_VERSION is equal.
 # Ideally we want to have only one place for this number, but parsing META.json
