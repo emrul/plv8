@@ -7,12 +7,12 @@
 # structure in v8 which may be different from version to another, but user
 # can specify the v8 version by AUTOV8_VERSION, too.
 #-----------------------------------------------------------------------------#
-AUTOV8_VERSION = 5.5.372
+AUTOV8_VERSION = 5.6.184
 AUTOV8_DIR = build/v8-git-mirror-$(AUTOV8_VERSION)
 AUTOV8_OUT = build/v8-git-mirror-$(AUTOV8_VERSION)/out/native
 AUTOV8_DEPOT_TOOLS = build/depot_tools
 AUTOV8_LIB = $(AUTOV8_OUT)/libv8_snapshot.a
-AUTOV8_STATIC_LIBS = libv8_base.a libv8_nosnapshot.a libv8_libplatform.a libv8_libbase.a libicui18n.a libicuuc.a #libicudata.a
+AUTOV8_STATIC_LIBS = libv8_base.a libv8_nosnapshot.a libv8_libplatform.a libv8_libbase.a libicui18n.a libicuuc.a libv8_external_snapshot.a libv8_libsampler.a
 
 export PATH := $(abspath $(AUTOV8_DEPOT_TOOLS)):$(PATH)
 
@@ -45,12 +45,19 @@ $(AUTOV8_LIB): $(AUTOV8_DIR)
 	test -f $(AUTOV8_OUT)/libv8_libplatform.a || \
 		ln -s $(abspath $(AUTOV8_OUT)/obj.target/src/libv8_libplatform.a) \
 			$(AUTOV8_OUT)/libv8_libplatform.a
+	test -f $(AUTOV8_OUT)/libv8_external_snapshot.a || \
+		ln -s $(abspath $(AUTOV8_OUT)/obj.target/src/libv8_external_snapshot.a) \
+			$(AUTOV8_OUT)/libv8_external_snapshot.a
+	test -f $(AUTOV8_OUT)/libv8_libsampler.a || \
+		ln -s $(abspath $(AUTOV8_OUT)/obj.target/src/libv8_libsampler.a) \
+			$(AUTOV8_OUT)/libv8_libsampler.a
 	test -f $(AUTOV8_OUT)/libicui18n.a || \
 		ln -s $(abspath $(AUTOV8_OUT)/obj.target/third_party/icu/libicui18n.a) \
 			$(AUTOV8_OUT)/libicui18n.a
 	test -f $(AUTOV8_OUT)/libicuuc.a || \
 		ln -s $(abspath $(AUTOV8_OUT)/obj.target/third_party/icu/libicuuc.a) \
 			$(AUTOV8_OUT)/libicuuc.a
+# Seems to be Windows only?
 #	test -f $(AUTOV8_OUT)/libicudata.a || \
 #		ln -s $(abspath $(AUTOV8_OUT)/obj.target/third_party/icu/libicudata.a) \
 #			$(AUTOV8_OUT)/libicudata.a
